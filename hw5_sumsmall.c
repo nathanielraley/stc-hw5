@@ -7,8 +7,8 @@ evaluate to the same thing; since we were supposed to have
 different results, I keep the types small*/
 
 int main(){
-double sum, sum1;
-long int i, j;
+float sum, sum1;
+int i, j;
 
 for(i=1;i<=10000;i++){
 sum+=1./(i*i);
@@ -16,7 +16,7 @@ sum+=1./(i*i);
 
 printf("%.14f\n",sum);
 
-for(j=10000;j<=1;j--){
+for(j=10000;j>=1;j--){
 sum1+=1./(j*j);
 }
 

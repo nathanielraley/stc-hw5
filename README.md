@@ -14,25 +14,33 @@ F50 = biga * BIG_INT + bigb, therefore
 F50 = 5 * 2147483647 + 1848850790.
 
 The third part (hw5_sumsmall.c) needs some explanation, because it gives out-of-bounds results sometimes. This calculation to be performed was to calculate the series of inverse squares (1/1+1/4+1/9+1/16+...+1/(n^2), where n=10000). First, the series was summed in the order demonstrated above, starting with the largest value and adding increasingly smaller values; then, the same series was summed the opposite way, started with the smallest value (1/(10000^2)) up to 1. At first, I declared my types as long ints and doubles, and my answers were correct, consistent, and exactly the same. Knowing that I was supposed to expect different results, I figured my types were too precise. As soon as I changed them to the plain "int" and "float" types, the results got wacky!
-
-
+Summing from largest to smallest gives me 1.64472532272339 (but also generates garbage!), while summing from smallest to largest gives me 1.64483404159546 consistently:
 ```
 #!c
-1.64472532272339
-0.00000000000000
-login1$ ./a.out
-397835764349353261027819520.00000000000000
-0.00000000000000
-login1$ ./a.out
--879576204952891251400226147139584.00000000000000
-0.00000000000000
 login1$ ./a.out
 1.64472532272339
-0.00000000000000
+1.64483404159546
+login1$ ./a.out
+1.64472532272339
+1.64483404159546
+login1$ ./a.out
+4575361.00000000000000
+1.64483404159546
+login1$ ./a.out
+1.64472532272339
+1.64483404159546
+login1$ ./a.out
+1.64472532272339
+1.64483404159546
+login1$ ./a.out
+-58356348664156461375422464.00000000000000
+1.64483404159546
 
 ```
 
+This is because pecision is lost most quickly when the magnitude of the two numbers to be added is greatest. When summing, one of the variables is always the running sum, and if you add from largest to smallest, you end up adding a huge thing (the running sum) to very tiny things (e.g., 1/10000000). This can be minimized by adding the numbers in order from the smallest to the largest in magnitude. When the numbers being summed are too far apart, bits will be discarded!
 
+The fourth part (hw5_sumsmall_mpi.c) is just a parallel implementation of the above program; the task can be split among 2,4,8,10, or 12 processes. Compile using mpicc or the equivalent, and run using ibrun or the equivalent. 
 
 ### Who do I talk to? ###
 

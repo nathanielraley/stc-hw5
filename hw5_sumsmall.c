@@ -7,8 +7,8 @@ evaluate to the same thing; since we were supposed to have
 different results, I keep the types small*/
 
 int main(){
-float sum, sum1;
-int i, j;
+double sum, sum1;
+long int i, j;
 
 for(i=1;i<=10000;i++){
 sum+=1./(i*i);
